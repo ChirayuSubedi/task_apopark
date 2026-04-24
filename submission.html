@@ -1,0 +1,1236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Technical Task Submission — Chirayu Subedi</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    /* ── Tokens ── */
+    :root {
+      --navy:       #0f172a;
+      --navy-mid:   #1e293b;
+      --navy-soft:  #334155;
+      --blue:       #3b82f6;
+      --blue-dark:  #1d4ed8;
+      --blue-light: #eff6ff;
+      --blue-pale:  #dbeafe;
+      --green:      #16a34a;
+      --green-light:#dcfce7;
+      --amber:      #d97706;
+      --amber-light:#fef9c3;
+      --red:        #dc2626;
+      --red-light:  #fee2e2;
+      --white:      #ffffff;
+      --grey-50:    #f8fafc;
+      --grey-100:   #f1f5f9;
+      --grey-200:   #e2e8f0;
+      --grey-300:   #cbd5e1;
+      --grey-500:   #64748b;
+      --grey-700:   #374151;
+      --grey-900:   #0f172a;
+      --radius:     8px;
+      --radius-lg:  12px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background: var(--grey-50);
+      color: var(--grey-900);
+      font-size: 14px;
+      line-height: 1.65;
+    }
+
+    /* ══════════════════════════════════════════
+       NAV
+    ══════════════════════════════════════════ */
+    .nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: var(--navy);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding: 0 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 56px;
+      gap: 24px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      text-decoration: none;
+      flex-shrink: 0;
+    }
+    .nav-monogram {
+      width: 32px;
+      height: 32px;
+      background: var(--blue);
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 13px;
+      color: white;
+      letter-spacing: -0.5px;
+    }
+    .nav-name {
+      font-weight: 600;
+      font-size: 13px;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .nav-tasks {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      flex: 1;
+      justify-content: center;
+    }
+
+    .nav-task-group {
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      background: rgba(255,255,255,0.06);
+      border-radius: 8px;
+      padding: 4px;
+    }
+
+    .nav-anchor {
+      font-size: 12px;
+      font-weight: 500;
+      color: rgba(255,255,255,0.7);
+      text-decoration: none;
+      padding: 5px 10px;
+      border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+      white-space: nowrap;
+    }
+    .nav-anchor:hover {
+      background: rgba(255,255,255,0.1);
+      color: white;
+    }
+
+    .nav-open {
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--blue);
+      text-decoration: none;
+      padding: 5px 8px;
+      border-radius: 6px;
+      border: 1px solid rgba(59,130,246,0.4);
+      transition: background 0.15s, color 0.15s;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .nav-open:hover {
+      background: var(--blue);
+      color: white;
+      border-color: var(--blue);
+    }
+    .nav-divider {
+      width: 1px;
+      height: 16px;
+      background: rgba(255,255,255,0.12);
+      margin: 0 6px;
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+    }
+    .lang-btn {
+      font-size: 12px;
+      font-weight: 600;
+      padding: 5px 12px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,0.15);
+      background: transparent;
+      color: rgba(255,255,255,0.55);
+      cursor: pointer;
+      transition: all 0.15s;
+      letter-spacing: 0.04em;
+    }
+    .lang-btn:hover { background: rgba(255,255,255,0.08); color: white; }
+    .lang-btn.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: white;
+    }
+
+    /* ══════════════════════════════════════════
+       COVER PAGE
+    ══════════════════════════════════════════ */
+    .cover {
+      min-height: 100vh;
+      background: var(--navy);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 80px 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Geometric background decoration */
+    .cover::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 50% at 20% 40%, rgba(59,130,246,0.12) 0%, transparent 60%),
+        radial-gradient(ellipse 50% 60% at 80% 60%, rgba(99,102,241,0.08) 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .cover-grid {
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+      background-size: 48px 48px;
+      pointer-events: none;
+    }
+
+    .cover-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 680px;
+    }
+
+    .cover-label {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--blue);
+      border: 1px solid rgba(59,130,246,0.4);
+      border-radius: 999px;
+      padding: 6px 16px;
+      margin-bottom: 32px;
+    }
+
+    .cover-name {
+      font-size: clamp(42px, 7vw, 72px);
+      font-weight: 800;
+      color: white;
+      line-height: 1.08;
+      letter-spacing: -0.03em;
+      margin-bottom: 16px;
+    }
+
+    .cover-title {
+      font-size: clamp(16px, 2.5vw, 22px);
+      font-weight: 400;
+      color: rgba(255,255,255,0.55);
+      margin-bottom: 48px;
+      letter-spacing: 0.01em;
+    }
+
+    .cover-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 56px;
+    }
+    .cover-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 8px;
+      padding: 8px 16px;
+      font-size: 13px;
+      color: rgba(255,255,255,0.75);
+    }
+    .cover-chip-label {
+      color: rgba(255,255,255,0.4);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .cover-tech {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .tech-tag {
+      font-size: 12px;
+      font-weight: 500;
+      padding: 4px 12px;
+      border-radius: 6px;
+      background: rgba(59,130,246,0.15);
+      color: rgba(147,197,253,0.9);
+      border: 1px solid rgba(59,130,246,0.25);
+    }
+
+    .cover-scroll {
+      position: absolute;
+      bottom: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      color: rgba(255,255,255,0.25);
+      font-size: 11px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .cover-scroll-line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, rgba(255,255,255,0.25), transparent);
+    }
+
+    /* ══════════════════════════════════════════
+       PAGE LAYOUT
+    ══════════════════════════════════════════ */
+    .page {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 64px 32px 80px;
+    }
+
+    /* ══════════════════════════════════════════
+       TYPOGRAPHY
+    ══════════════════════════════════════════ */
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blue);
+      margin-bottom: 8px;
+    }
+
+    h2.section-title {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--navy);
+      margin-bottom: 24px;
+      letter-spacing: -0.02em;
+      line-height: 1.2;
+    }
+
+    .doc-section { margin-bottom: 72px; }
+
+    /* ── Overview card ── */
+    .overview-card {
+      background: var(--navy);
+      border-radius: var(--radius-lg);
+      padding: 32px 36px;
+      color: rgba(255,255,255,0.75);
+      font-size: 15px;
+      line-height: 1.75;
+      position: relative;
+      overflow: hidden;
+    }
+    .overview-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--blue), #6366f1);
+    }
+    .overview-card strong { color: white; }
+
+    /* ── Task block ── */
+    .task-section {
+      margin-bottom: 64px;
+      scroll-margin-top: 72px;
+    }
+
+    .task-header {
+      display: flex;
+      align-items: flex-start;
+      gap: 20px;
+      margin-bottom: 28px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--grey-200);
+    }
+
+    .task-number {
+      width: 48px;
+      height: 48px;
+      border-radius: 10px;
+      background: var(--navy);
+      color: white;
+      font-weight: 800;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      letter-spacing: -0.5px;
+    }
+
+    .task-header-text { flex: 1; }
+
+    .task-title {
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: -0.02em;
+      margin-bottom: 4px;
+    }
+
+    .task-files {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      color: var(--grey-500);
+    }
+
+    /* ── Subsection label ── */
+    .sub-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--grey-500);
+      margin: 24px 0 10px;
+    }
+
+    /* ── Tables ── */
+    .data-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+      background: white;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--grey-200);
+      font-size: 13px;
+    }
+    .data-table thead tr { background: var(--grey-100); }
+    .data-table th {
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: 600;
+      font-size: 12px;
+      color: var(--grey-700);
+      border-bottom: 1px solid var(--grey-200);
+    }
+    .data-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--grey-100);
+      color: var(--grey-700);
+      vertical-align: top;
+      line-height: 1.55;
+    }
+    .data-table tbody tr:last-child td { border-bottom: none; }
+    .data-table tbody tr:hover td { background: var(--grey-50); }
+
+    code {
+      font-family: 'Courier New', monospace;
+      font-size: 12px;
+      background: var(--grey-100);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #be123c;
+      white-space: nowrap;
+    }
+
+    /* ── Callout ── */
+    .callout {
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin: 16px 0;
+      font-size: 13px;
+      line-height: 1.6;
+      border-left: 3px solid;
+    }
+    .callout-title {
+      font-weight: 700;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 6px;
+    }
+    .callout-text { color: var(--grey-700); }
+
+    .callout-blue {
+      background: var(--blue-light);
+      border-color: var(--blue);
+    }
+    .callout-blue .callout-title { color: var(--blue-dark); }
+
+    .callout-green {
+      background: var(--green-light);
+      border-color: var(--green);
+    }
+    .callout-green .callout-title { color: #15803d; }
+
+    /* ── Improvements ── */
+    .improve-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .improve-card {
+      background: white;
+      border: 1px solid var(--grey-200);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+    .improve-card-title {
+      font-weight: 700;
+      font-size: 13px;
+      color: var(--navy);
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--grey-200);
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .improve-card-num {
+      width: 22px;
+      height: 22px;
+      border-radius: 5px;
+      background: var(--navy);
+      color: white;
+      font-size: 11px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .improve-card ul { list-style: none; }
+    .improve-card li {
+      font-size: 12.5px;
+      color: var(--grey-700);
+      padding: 4px 0;
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      border-bottom: 1px solid var(--grey-100);
+    }
+    .improve-card li:last-child { border-bottom: none; }
+    .improve-card li::before {
+      content: '→';
+      color: var(--blue);
+      flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 999px;
+      flex-shrink: 0;
+      margin-left: auto;
+    }
+    .badge-high { background: var(--red-light); color: var(--red); }
+    .badge-med  { background: var(--amber-light); color: var(--amber); }
+    .badge-low  { background: var(--grey-100); color: var(--grey-500); }
+
+    /* ── Closing note ── */
+    .closing {
+      background: white;
+      border: 1px solid var(--grey-200);
+      border-radius: var(--radius-lg);
+      padding: 32px 36px;
+      margin-top: 48px;
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+    }
+    .closing-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      background: var(--blue-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      flex-shrink: 0;
+    }
+    .closing-body { flex: 1; }
+    .closing-body h3 {
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+    .closing-body p { font-size: 14px; color: var(--grey-700); }
+
+    /* ── Section divider ── */
+    .section-divider {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      margin: 56px 0 48px;
+    }
+    .section-divider-line {
+      flex: 1;
+      height: 1px;
+      background: var(--grey-200);
+    }
+    .section-divider-label {
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--grey-300);
+    }
+
+    /* ── Language block visibility ── */
+    .lang-block-de { display: none; }
+    .lang-block-en { display: block; }
+    body.lang-de .lang-block-de { display: block; }
+    body.lang-de .lang-block-en { display: none; }
+
+    /* ── Footer ── */
+    .doc-footer {
+      background: var(--navy);
+      color: rgba(255,255,255,0.4);
+      text-align: center;
+      padding: 28px 32px;
+      font-size: 12px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .doc-footer a { color: rgba(255,255,255,0.6); text-decoration: none; }
+    .doc-footer a:hover { color: white; }
+
+    /* ══════════════════════════════════════════
+       PRINT / PDF
+    ══════════════════════════════════════════ */
+    @media print {
+      .nav { display: none; }
+      .cover-scroll { display: none; }
+      body { background: white; font-size: 11px; }
+
+      .cover {
+        min-height: auto;
+        padding: 60px 40px;
+        page-break-after: always;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+      }
+
+      .page { padding: 32px 40px; max-width: 100%; }
+
+      /* Show English in PDF by default */
+      .lang-block-de { display: none !important; }
+      .lang-block-en { display: block !important; }
+
+      /* German section appended after English for print */
+      .print-de-section { display: block !important; }
+
+      .task-section { page-break-inside: avoid; }
+      .callout { page-break-inside: avoid; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .improve-grid { page-break-inside: avoid; }
+      .overview-card { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+      h2.section-title { page-break-after: avoid; }
+      .sub-label { page-break-after: avoid; }
+
+      .doc-footer { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
+  </style>
+</head>
+<body class="lang-en">
+
+  <!-- ═══════════════════════════════════════════════════════
+       NAVIGATION
+  ═══════════════════════════════════════════════════════ -->
+  <nav class="nav">
+    <a href="#cover" class="nav-brand">
+      <div class="nav-monogram">CS</div>
+      <span class="nav-name">Chirayu Subedi</span>
+    </a>
+
+    <div class="nav-tasks">
+      <div class="nav-task-group">
+        <a href="#task1" class="nav-anchor">
+          <span class="lang-block-en">Task 1 — Table</span>
+          <span class="lang-block-de">Aufgabe 1 — Tabelle</span>
+        </a>
+        <a href="Task1/table.html" target="_blank" class="nav-open" title="Open Task 1 in browser">
+          ↗ <span class="lang-block-en">Open</span><span class="lang-block-de">Öffnen</span>
+        </a>
+      </div>
+
+      <div class="nav-divider"></div>
+
+      <div class="nav-task-group">
+        <a href="#task2" class="nav-anchor">
+          <span class="lang-block-en">Task 2 — Board</span>
+          <span class="lang-block-de">Aufgabe 2 — Board</span>
+        </a>
+        <a href="Task2/board.html" target="_blank" class="nav-open" title="Open Task 2 in browser">
+          ↗ <span class="lang-block-en">Open</span><span class="lang-block-de">Öffnen</span>
+        </a>
+      </div>
+
+      <div class="nav-divider"></div>
+
+      <div class="nav-task-group">
+        <a href="#task3" class="nav-anchor">
+          <span class="lang-block-en">Task 3 — Map</span>
+          <span class="lang-block-de">Aufgabe 3 — Karte</span>
+        </a>
+        <a href="Task3/map.html" target="_blank" class="nav-open" title="Open Task 3 in browser">
+          ↗ <span class="lang-block-en">Open</span><span class="lang-block-de">Öffnen</span>
+        </a>
+      </div>
+    </div>
+
+    <div class="nav-right">
+      <button class="lang-btn active" data-lang="en" onclick="setLang('en')">EN</button>
+      <button class="lang-btn" data-lang="de" onclick="setLang('de')">DE</button>
+    </div>
+  </nav>
+
+  <!-- ═══════════════════════════════════════════════════════
+       COVER PAGE
+  ═══════════════════════════════════════════════════════ -->
+  <section class="cover" id="cover">
+    <div class="cover-grid"></div>
+    <div class="cover-inner">
+      <div class="cover-label">
+        <span class="lang-block-en">Technical Task Submission</span>
+        <span class="lang-block-de">Technische Aufgabe — Einreichung</span>
+      </div>
+
+      <h1 class="cover-name">Chirayu Subedi</h1>
+
+      <p class="cover-title">
+        <span class="lang-block-en">Frontend / Full-Stack Developer</span>
+        <span class="lang-block-de">Frontend / Full-Stack Entwickler</span>
+      </p>
+
+      <div class="cover-meta">
+        <div class="cover-chip">
+          <span class="cover-chip-label">
+            <span class="lang-block-en">Date</span>
+            <span class="lang-block-de">Datum</span>
+          </span>
+          April 2026
+        </div>
+        <div class="cover-chip">
+          <span class="cover-chip-label">
+            <span class="lang-block-en">Contact</span>
+            <span class="lang-block-de">Kontakt</span>
+          </span>
+          chirayu.subedi.cs84@gmail.com
+        </div>
+        <div class="cover-chip">
+          <span class="cover-chip-label">
+            <span class="lang-block-en">Recipient</span>
+            <span class="lang-block-de">Empfänger</span>
+          </span>
+          Markus Waidmann
+        </div>
+      </div>
+
+      <div class="cover-tech">
+        <span class="tech-tag">HTML</span>
+        <span class="tech-tag">CSS</span>
+        <span class="tech-tag">JavaScript</span>
+        <span class="tech-tag">
+          <span class="lang-block-en">No frameworks</span>
+          <span class="lang-block-de">Keine Frameworks</span>
+        </span>
+        <span class="tech-tag">localStorage</span>
+        <span class="tech-tag">
+          <span class="lang-block-en">Drag &amp; Drop</span>
+          <span class="lang-block-de">Drag &amp; Drop</span>
+        </span>
+      </div>
+    </div>
+
+    <div class="cover-scroll">
+      <div class="cover-scroll-line"></div>
+      <span class="lang-block-en">scroll</span>
+      <span class="lang-block-de">scrollen</span>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════
+       MAIN CONTENT  ·  ENGLISH
+  ═══════════════════════════════════════════════════════ -->
+  <div class="lang-block-en">
+  <div class="page">
+
+    <!-- Overview -->
+    <div class="doc-section">
+      <div class="section-label">Overview</div>
+      <h2 class="section-title">Implementation Summary</h2>
+      <div class="overview-card">
+        All three tasks are implemented in <strong>plain HTML, CSS, and JavaScript</strong> — no frameworks, no build step, no external libraries. Each task folder opens directly in the browser. The implementation follows a consistent pattern throughout: <strong>update state → persist → re-render → update derived UI</strong>. Code comments explain the <em>why</em> behind each decision, not just the what.
+      </div>
+    </div>
+
+    <!-- ── Task 1 ── -->
+    <div class="task-section" id="task1">
+      <div class="task-header">
+        <div class="task-number">01</div>
+        <div class="task-header-text">
+          <div class="task-title">Sortable Employee Table</div>
+          <div class="task-files">styles.css &nbsp;·&nbsp; table.js</div>
+        </div>
+      </div>
+
+      <div class="sub-label">CSS Changes — styles.css</div>
+      <table class="data-table">
+        <thead><tr><th style="width:36%">Change</th><th>Reason / Decision</th></tr></thead>
+        <tbody>
+          <tr><td><code>box-sizing: border-box</code></td><td>Industry standard — padding and borders are included in element dimensions, preventing layout overflow. Consistent with Tasks 2 and 3.</td></tr>
+          <tr><td>Column widths via <code>nth-child</code></td><td><code>table-layout: fixed</code> was already set — <code>nth-child</code> is the correct selector. Widths: Name 28%, Dept 22%, Role 28%, Date 12%, Fee 10%</td></tr>
+          <tr><td>Zebra striping on even rows</td><td>Alternating row colour helps the eye track horizontally across a wide table without full row borders</td></tr>
+          <tr><td>Blue row hover</td><td>Immediate feedback on which row the cursor is on; blue doesn't clash with status colours used elsewhere</td></tr>
+          <tr><td><code>user-select: none</code> on sortable headers</td><td>Repeated clicks for sorting would otherwise highlight the header text, which looks broken</td></tr>
+          <tr><td>Hover state on sortable headers</td><td>Darker grey background signals the header is interactive before the cursor changes</td></tr>
+          <tr><td><code>text-align: right</code> on fee column</td><td>Standard typographic convention for numeric and currency values</td></tr>
+        </tbody>
+      </table>
+
+      <div class="sub-label">JavaScript Changes — table.js</div>
+      <table class="data-table">
+        <thead><tr><th style="width:36%">Change</th><th>Reason / Decision</th></tr></thead>
+        <tbody>
+          <tr><td>Currency symbol <code>€</code> in fee cells</td><td>Raw numbers without a unit are ambiguous in a data table — <code>€</code> makes the column self-explanatory</td></tr>
+          <tr><td>Implemented <code>sortBy(key, type)</code></td><td>Toggles direction on same key click, resets to <code>asc</code> on a new key</td></tr>
+          <tr><td>Stable sort via index tiebreaker</td><td>Each row is tagged with its original array index. Equal values (e.g. same start date) preserve their original relative order</td></tr>
+          <tr><td><code>localeCompare</code> for string sort</td><td>Handles German umlauts (ä, ö, ü) correctly — plain <code>&lt;</code> comparison would sort them incorrectly</td></tr>
+          <tr><td><code>Date.getTime()</code> for date sort</td><td>Explicit and unambiguous — makes intent clearer than lexicographic string comparison</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-blue">
+        <div class="callout-title">Key Decision — Stable Sort</div>
+        <div class="callout-text">JavaScript's native sort is stable in all modern browsers. To make stability <em>explicit and independent of engine guarantees</em>, each row is tagged with its original index before sorting and that index serves as a tiebreaker when the primary comparison returns zero.</div>
+      </div>
+    </div>
+
+    <!-- ── Task 2 ── -->
+    <div class="task-section" id="task2">
+      <div class="task-header">
+        <div class="task-number">02</div>
+        <div class="task-header-text">
+          <div class="task-title">Kanban Ticket Board — Drag and Drop</div>
+          <div class="task-files">styles.css &nbsp;·&nbsp; board.js</div>
+        </div>
+      </div>
+
+      <div class="sub-label">CSS Changes — styles.css</div>
+      <table class="data-table">
+        <thead><tr><th style="width:36%">Change</th><th>Reason / Decision</th></tr></thead>
+        <tbody>
+          <tr><td><code>cursor: grab</code> on <code>.ticket</code></td><td>Immediately signals draggability before the user attempts to drag</td></tr>
+          <tr><td>Shadow lift on <code>.ticket:hover</code></td><td>Physical depth metaphor reinforces that cards can be picked up and moved</td></tr>
+          <tr><td><code>.ticket.dragging { opacity: 0.35 }</code></td><td>Source card fades while "in flight" — standard DnD convention showing where the card came from</td></tr>
+          <tr><td>Ticket typography hierarchy</td><td>Small muted ID label above a bolder title — ID is metadata, title is primary content</td></tr>
+          <tr><td><code>.dropzone.drag-over</code> dashed blue border</td><td>Dashed border is the universal drop-target indicator; removed only when <code>enterCount</code> reaches 0 — no flicker</td></tr>
+        </tbody>
+      </table>
+
+      <div class="sub-label">JavaScript Changes — board.js</div>
+      <table class="data-table">
+        <thead><tr><th style="width:36%">Change</th><th>Reason / Decision</th></tr></thead>
+        <tbody>
+          <tr><td><code>dragenter</code> counter for highlight</td><td>Fixes the flicker bug: <code>dragleave</code> fires when the cursor moves into a child ticket element. A per-zone <code>enterCount</code> increments on <code>dragenter</code> and decrements on <code>dragleave</code> — highlight removed only when count hits 0</td></tr>
+          <tr><td><code>dragover</code> calls <code>preventDefault()</code> only</td><td>Required by the HTML5 DnD spec to allow drops; highlight logic moved to <code>dragenter</code>/<code>dragleave</code></td></tr>
+          <tr><td><code>drop</code> resets <code>enterCount</code> to 0</td><td>Ensures the counter is clean for the next drag even if <code>dragleave</code> didn't fire (e.g. fast drops)</td></tr>
+          <tr><td><code>dragend</code> always clears state</td><td>Fires even on Escape/cancelled drag — prevents stale ID affecting the next drag</td></tr>
+          <tr><td><code>setupDropzones()</code> called once before <code>render()</code></td><td><code>render()</code> only rewrites dropzone children — listeners survive re-renders without needing to be re-attached</td></tr>
+          <tr><td>Versioned <code>localStorage</code> key</td><td>Incrementing the version on schema change prevents stale data errors on load</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-green">
+        <div class="callout-title">Bug Fixed — Drag-Over Highlight Flicker</div>
+        <div class="callout-text">Using <code>dragover</code> to add and <code>dragleave</code> to remove <code>.drag-over</code> caused visible flickering when the cursor moved over a child ticket card. Fixed with a <code>dragenter</code>/<code>dragleave</code> enter-counter: the highlight is removed only when the counter returns to zero — i.e. the cursor has fully left the column.</div>
+      </div>
+
+      <div class="callout callout-blue">
+        <div class="callout-title">Key Decision — Module-Level Drag Variable vs. DataTransfer</div>
+        <div class="callout-text">A module-level <code>draggedTicketId</code> variable is simpler than <code>DataTransfer</code>: no serialisation, no parsing, intent is clear from the name. The only tradeoff — cross-window drops — is not a requirement here.</div>
+      </div>
+    </div>
+
+    <!-- ── Task 3 ── -->
+    <div class="task-section" id="task3">
+      <div class="task-header">
+        <div class="task-number">03</div>
+        <div class="task-header-text">
+          <div class="task-title">Parking Lot Selector</div>
+          <div class="task-files">styles.css &nbsp;·&nbsp; map.js</div>
+        </div>
+      </div>
+
+      <div class="sub-label">CSS Changes — styles.css</div>
+      <table class="data-table">
+        <thead><tr><th style="width:36%">Change</th><th>Reason / Decision</th></tr></thead>
+        <tbody>
+          <tr><td>Chip colours match spot tiles</td><td>Legend and tiles share the same palette — green for available, red for occupied, blue for selected. No colour mismatch.</td></tr>
+          <tr><td><code>.spot.available</code> green tint</td><td>Green = open = go — universally understood traffic-light signal for availability</td></tr>
+          <tr><td><code>.spot.occupied</code>: red + <code>not-allowed</code> + <code>opacity: 0.7</code></td><td>Three visual cues reinforce the same message: this spot cannot be selected</td></tr>
+          <tr><td><code>.spot.selected</code> blue tint</td><td>Blue is the standard "active/selected" colour; doesn't conflict with green/red status colours</td></tr>
+          <tr><td>Different hover colours for available vs. selected</td><td>Deeper green signals "click to select"; deeper blue signals "click to deselect" — hover communicates the action before the click</td></tr>
+          <tr><td><code>min-height: 20px</code> on <code>.error</code></td><td>Reserves vertical space so the layout does not jump when the error message appears or disappears</td></tr>
+        </tbody>
+      </table>
+
+      <div class="sub-label">JavaScript Changes — map.js</div>
+      <table class="data-table">
+        <thead><tr><th style="width:36%">Change</th><th>Reason / Decision</th></tr></thead>
+        <tbody>
+          <tr><td><code>localStorage</code> persistence</td><td>Selection survives page reload. <code>loadSelection()</code> validates each ID against current <code>spotData</code> — only spots that still exist and are <code>available</code> are restored</td></tr>
+          <tr><td>Implemented <code>handleSpotClick(spot)</code></td><td>All three rules in one place: ignore occupied → toggle selected → enforce max 3</td></tr>
+          <tr><td>Early return for occupied spots</td><td>No state change, no re-render, no error — occupied tiles are purely informational</td></tr>
+          <tr><td>Deselect clears the error message</td><td>If the user hit the limit then deselects a spot, the error is no longer relevant</td></tr>
+          <tr><td><code>Set</code> for <code>selectedIds</code></td><td>O(1) add/delete/has — more efficient than an array; also prevents duplicates without extra logic</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-green">
+        <div class="callout-title">Feature Added — Selection Persists on Reload</div>
+        <div class="callout-text"><code>saveSelection()</code> serialises <code>selectedIds</code> to <code>localStorage</code> after every interaction. <code>loadSelection()</code> runs before the first render and validates each saved ID — only spots that still exist and are still <code>available</code> are restored.</div>
+      </div>
+
+      <div class="callout callout-blue">
+        <div class="callout-title">Key Decision — Full Re-Render on Every Click</div>
+        <div class="callout-text">With 10 spots the performance cost is negligible. A full re-render keeps the logic simple: <code>selectedIds</code> is the single source of truth and the DOM always reflects it completely. A partial DOM-update approach would be faster but harder to reason about.</div>
+      </div>
+    </div>
+
+    <!-- Improvements -->
+    <div class="doc-section">
+      <div class="section-label">Future Improvements</div>
+      <h2 class="section-title">What I Would Improve With More Time</h2>
+      <div class="improve-grid">
+        <div class="improve-card">
+          <div class="improve-card-title"><div class="improve-card-num">01</div> Table</div>
+          <ul>
+            <li>Keyboard sort (Enter / Space on header) <span class="badge badge-high">High</span></li>
+            <li><code>aria-sort</code> for screen readers <span class="badge badge-high">High</span></li>
+            <li><code>:focus-visible</code> ring on headers <span class="badge badge-high">High</span></li>
+            <li>Responsive horizontal scroll <span class="badge badge-med">Med</span></li>
+            <li>Multi-column sort via Shift+click <span class="badge badge-low">Low</span></li>
+          </ul>
+        </div>
+        <div class="improve-card">
+          <div class="improve-card-title"><div class="improve-card-num">02</div> Board</div>
+          <ul>
+            <li>Touch drag support (Pointer Events) <span class="badge badge-high">High</span></li>
+            <li>Priority colour badges on tickets <span class="badge badge-high">High</span></li>
+            <li>Keyboard card movement (arrow keys) <span class="badge badge-med">Med</span></li>
+            <li>Empty column placeholder text <span class="badge badge-med">Med</span></li>
+            <li>Undo last move (Ctrl+Z) <span class="badge badge-low">Low</span></li>
+          </ul>
+        </div>
+        <div class="improve-card">
+          <div class="improve-card-title"><div class="improve-card-num">03</div> Parking Map</div>
+          <ul>
+            <li><code>:focus-visible</code> styles on spots <span class="badge badge-high">High</span></li>
+            <li><code>aria-pressed</code> on spot buttons <span class="badge badge-high">High</span></li>
+            <li>"Clear selection" button <span class="badge badge-med">Med</span></li>
+            <li>Hover tooltip: ID + fee + zone <span class="badge badge-med">Med</span></li>
+            <li>Zone / row labels on the grid <span class="badge badge-low">Low</span></li>
+          </ul>
+        </div>
+        <div class="improve-card">
+          <div class="improve-card-title"><div class="improve-card-num">★</div> All Tasks</div>
+          <ul>
+            <li><code>aria-sort</code> on table headers</li>
+            <li>ARIA roles for Kanban columns</li>
+            <li>Touch drag-and-drop fallback</li>
+            <li><code>aria-pressed</code> on spot buttons</li>
+            <li><code>prefers-reduced-motion</code> for transitions</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Closing -->
+    <div class="closing">
+      <div class="closing-icon">✦</div>
+      <div class="closing-body">
+        <h3>General Approach</h3>
+        <p>No external libraries or build tools were used in any task. All logic follows a simple pattern: update state → persist → re-render → update derived UI. Code comments explain <em>why</em> decisions were made, not just what the code does. The same priority I would apply on a real team.</p>
+      </div>
+    </div>
+
+  </div>
+  </div><!-- /lang-block-en -->
+
+
+  <!-- ═══════════════════════════════════════════════════════
+       MAIN CONTENT  ·  GERMAN
+  ═══════════════════════════════════════════════════════ -->
+  <div class="lang-block-de">
+  <div class="page">
+
+    <!-- Übersicht -->
+    <div class="doc-section">
+      <div class="section-label">Übersicht</div>
+      <h2 class="section-title">Zusammenfassung der Implementierung</h2>
+      <div class="overview-card">
+        Alle drei Aufgaben wurden in <strong>reinem HTML, CSS und JavaScript</strong> umgesetzt – ohne Frameworks, ohne Build-Schritt, ohne externe Bibliotheken. Jeder Aufgabenordner öffnet sich direkt im Browser. Die Implementierung folgt durchgehend einem einfachen Muster: <strong>Zustand aktualisieren → speichern → neu rendern → abgeleitete UI aktualisieren</strong>. Code-Kommentare erklären das <em>Warum</em> hinter jeder Entscheidung, nicht nur das Was.
+      </div>
+    </div>
+
+    <!-- ── Aufgabe 1 ── -->
+    <div class="task-section" id="task1-de">
+      <div class="task-header">
+        <div class="task-number">01</div>
+        <div class="task-header-text">
+          <div class="task-title">Sortierbare Mitarbeitertabelle</div>
+          <div class="task-files">styles.css &nbsp;·&nbsp; table.js</div>
+        </div>
+      </div>
+
+      <div class="sub-label">CSS-Änderungen — styles.css</div>
+      <table class="data-table">
+        <thead><tr><th style="width:36%">Änderung</th><th>Begründung / Entscheidung</th></tr></thead>
+        <tbody>
+          <tr><td><code>box-sizing: border-box</code></td><td>Branchenstandard — Padding und Borders sind in den Abmessungen enthalten, verhindert Layout-Overflow. Konsistent mit Aufgabe 2 und 3.</td></tr>
+          <tr><td>Spaltenbreiten via <code>nth-child</code></td><td><code>table-layout: fixed</code> war bereits gesetzt — <code>nth-child</code> ist der richtige Selektor. Breiten: Name 28%, Abt. 22%, Rolle 28%, Datum 12%, Gebühr 10%</td></tr>
+          <tr><td>Wechselnde Zeilenfarben (Zebra)</td><td>Erleichtert das horizontale Verfolgen in einer breiten Tabelle ohne vollständige Zeilenrahmen</td></tr>
+          <tr><td>Blauer Zeilen-Hover</td><td>Sofortiges visuelles Feedback, welche Zeile aktiv ist; Blau kollidiert nicht mit Statusfarben</td></tr>
+          <tr><td><code>user-select: none</code> auf sortierbare Header</td><td>Verhindert versehentliche Textmarkierung bei Mehrfachklicks zum Sortieren</td></tr>
+          <tr><td>Hover-Zustand auf sortierbaren Headern</td><td>Dunklerer Grau-Hintergrund signalisiert Interaktivität, bevor der Cursor wechselt</td></tr>
+          <tr><td><code>text-align: right</code> auf Gebührenspalte</td><td>Typografischer Standard für numerische Werte und Währungsangaben</td></tr>
+        </tbody>
+      </table>
+
+      <div class="sub-label">JavaScript-Änderungen — table.js</div>
+      <table class="data-table">
+        <thead><tr><th style="width:36%">Änderung</th><th>Begründung / Entscheidung</th></tr></thead>
+        <tbody>
+          <tr><td>Währungssymbol <code>€</code> in Gebührenzellen</td><td>Rohe Zahlen ohne Einheit sind in einer Datentabelle mehrdeutig — <code>€</code> macht die Spalte selbsterklärend</td></tr>
+          <tr><td><code>sortBy(key, type)</code> implementiert</td><td>Schaltet Richtung bei gleichem Key um, setzt bei neuem Key auf <code>asc</code> zurück</td></tr>
+          <tr><td>Stabiles Sortieren via Index-Tiebreaker</td><td>Jede Zeile erhält ihren ursprünglichen Array-Index. Bei gleichen Werten (z.B. gleiches Startdatum) bleibt die ursprüngliche Reihenfolge erhalten</td></tr>
+          <tr><td><code>localeCompare</code> für String-Sortierung</td><td>Behandelt deutsche Umlaute (ä, ö, ü) korrekt — ein einfacher <code>&lt;</code>-Vergleich würde sie falsch sortieren</td></tr>
+          <tr><td><code>Date.getTime()</code> für Datumssortierung</td><td>Explizit und eindeutig — macht den Intent klarer als lexikografischer String-Vergleich</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-blue">
+        <div class="callout-title">Wichtige Entscheidung — Stabiles Sortieren</div>
+        <div class="callout-text">JavaScripts natives Sortierverfahren ist in allen modernen Browsern stabil. Um Stabilität <em>explizit und unabhängig von Engine-Garantien</em> zu gewährleisten, wird jede Zeile vor dem Sortieren mit ihrem ursprünglichen Index markiert. Dieser dient als Tiebreaker, wenn der primäre Vergleich null ergibt.</div>
+      </div>
+    </div>
+
+    <!-- ── Aufgabe 2 ── -->
+    <div class="task-section" id="task2-de">
+      <div class="task-header">
+        <div class="task-number">02</div>
+        <div class="task-header-text">
+          <div class="task-title">Kanban-Aufgabenboard — Drag and Drop</div>
+          <div class="task-files">styles.css &nbsp;·&nbsp; board.js</div>
+        </div>
+      </div>
+
+      <div class="sub-label">CSS-Änderungen — styles.css</div>
+      <table class="data-table">
+        <thead><tr><th style="width:36%">Änderung</th><th>Begründung / Entscheidung</th></tr></thead>
+        <tbody>
+          <tr><td><code>cursor: grab</code> auf <code>.ticket</code></td><td>Signalisiert sofort, dass Karten ziehbar sind, bevor der Nutzer es versucht</td></tr>
+          <tr><td>Schatteneffekt bei <code>.ticket:hover</code></td><td>Physische Tiefenmetapher verstärkt, dass Karten aufgenommen und verschoben werden können</td></tr>
+          <tr><td><code>.ticket.dragging { opacity: 0.35 }</code></td><td>Quellkarte blendet sich ein während sie "in der Luft" ist — zeigt, woher die Karte kommt</td></tr>
+          <tr><td>Typografie-Hierarchie der Tickets</td><td>Kleine, gedämpfte ID-Beschriftung über dem Titel — ID ist Metadaten, Titel ist Hauptinhalt</td></tr>
+          <tr><td>Gestrichelter blauer Rahmen bei <code>.drag-over</code></td><td>Gestrichelter Rahmen = universelles Dropzonen-Signal; wird nur entfernt wenn <code>enterCount</code> 0 erreicht — kein Flackern</td></tr>
+        </tbody>
+      </table>
+
+      <div class="sub-label">JavaScript-Änderungen — board.js</div>
+      <table class="data-table">
+        <thead><tr><th style="width:36%">Änderung</th><th>Begründung / Entscheidung</th></tr></thead>
+        <tbody>
+          <tr><td><code>dragenter</code>-Zähler für Hervorhebung</td><td>Behebt den Flackerfehler: <code>dragleave</code> feuert beim Überfahren eines Kind-Tickets. Ein Zähler pro Zone inkrementiert bei <code>dragenter</code> und dekrementiert bei <code>dragleave</code> — Hervorhebung wird nur entfernt wenn Zähler 0 erreicht</td></tr>
+          <tr><td><code>dragover</code> ruft nur <code>preventDefault()</code> auf</td><td>Vom HTML5 DnD-Standard erforderlich; Hervorhebungslogik zu <code>dragenter</code>/<code>dragleave</code> verschoben</td></tr>
+          <tr><td><code>drop</code> setzt <code>enterCount</code> auf 0 zurück</td><td>Stellt sicher, dass der Zähler für den nächsten Drag korrekt ist, auch wenn <code>dragleave</code> nicht gefeuert hat</td></tr>
+          <tr><td><code>dragend</code> löscht immer den Zustand</td><td>Feuert auch bei Escape/abgebrochenem Drag — verhindert veraltete ID beim nächsten Drag</td></tr>
+          <tr><td><code>setupDropzones()</code> einmalig vor <code>render()</code></td><td><code>render()</code> überschreibt nur Dropzone-Kinder — Listener überleben Re-Renders ohne Neuregistrierung</td></tr>
+          <tr><td>Versionierter <code>localStorage</code>-Key</td><td>Inkrementierung der Version bei Schema-Änderung verhindert Fehler durch veraltete gespeicherte Daten</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-green">
+        <div class="callout-title">Behobener Fehler — Drag-over-Hervorhebung flackert</div>
+        <div class="callout-text">Die Verwendung von <code>dragover</code> zum Hinzufügen und <code>dragleave</code> zum Entfernen von <code>.drag-over</code> verursachte sichtbares Flackern beim Überfahren einer Kind-Ticket-Karte. Behoben mit einem <code>dragenter</code>/<code>dragleave</code>-Zähler: Die Hervorhebung wird nur entfernt, wenn der Zähler null erreicht — d.h. der Cursor hat die Spalte wirklich verlassen.</div>
+      </div>
+
+      <div class="callout callout-blue">
+        <div class="callout-title">Wichtige Entscheidung — Modul-Variable vs. DataTransfer</div>
+        <div class="callout-text">Eine Modul-Variable <code>draggedTicketId</code> ist einfacher als <code>DataTransfer</code>: keine Serialisierung, keine Verarbeitung, der Intent ist am Namen ablesbar. Der einzige Nachteil — fensterübergreifende Drops — ist hier keine Anforderung.</div>
+      </div>
+    </div>
+
+    <!-- ── Aufgabe 3 ── -->
+    <div class="task-section" id="task3-de">
+      <div class="task-header">
+        <div class="task-number">03</div>
+        <div class="task-header-text">
+          <div class="task-title">Parkplatz-Auswahl</div>
+          <div class="task-files">styles.css &nbsp;·&nbsp; map.js</div>
+        </div>
+      </div>
+
+      <div class="sub-label">CSS-Änderungen — styles.css</div>
+      <table class="data-table">
+        <thead><tr><th style="width:36%">Änderung</th><th>Begründung / Entscheidung</th></tr></thead>
+        <tbody>
+          <tr><td>Chip-Farben entsprechen Stellplatz-Kacheln</td><td>Legende und Kacheln teilen dieselbe Farbpalette — grün für verfügbar, rot für belegt, blau für ausgewählt. Kein Farbwiderspruch.</td></tr>
+          <tr><td><code>.spot.available</code> grüner Farbton</td><td>Grün = frei = los — universelles Ampel-Signal für Verfügbarkeit</td></tr>
+          <tr><td><code>.spot.occupied</code>: rot + <code>not-allowed</code> + <code>opacity: 0.7</code></td><td>Drei visuelle Hinweise verstärken dieselbe Botschaft: dieser Platz kann nicht ausgewählt werden</td></tr>
+          <tr><td><code>.spot.selected</code> blauer Farbton</td><td>Blau ist die Standardfarbe für "aktiv/ausgewählt"; kollidiert nicht mit grün/rot</td></tr>
+          <tr><td>Unterschiedliche Hover-Farben für verfügbar/ausgewählt</td><td>Tieferes Grün signalisiert "klicken zum Auswählen"; tieferes Blau signalisiert "klicken zum Abwählen"</td></tr>
+          <tr><td><code>min-height: 20px</code> auf <code>.error</code></td><td>Reserviert vertikalen Platz, damit das Layout nicht springt wenn die Fehlermeldung erscheint oder verschwindet</td></tr>
+        </tbody>
+      </table>
+
+      <div class="sub-label">JavaScript-Änderungen — map.js</div>
+      <table class="data-table">
+        <thead><tr><th style="width:36%">Änderung</th><th>Begründung / Entscheidung</th></tr></thead>
+        <tbody>
+          <tr><td><code>localStorage</code>-Persistenz</td><td>Auswahl überlebt Seitenneuladen. <code>loadSelection()</code> validiert jede ID gegen aktuelle <code>spotData</code> — nur noch vorhandene, verfügbare Plätze werden wiederhergestellt</td></tr>
+          <tr><td><code>handleSpotClick(spot)</code> implementiert</td><td>Alle drei Regeln an einer Stelle: belegt ignorieren → ausgewählt umschalten → max. 3 durchsetzen</td></tr>
+          <tr><td>Frühzeitiger Abbruch bei belegten Plätzen</td><td>Keine Zustandsänderung, kein Re-Render, kein Fehler — belegte Kacheln sind rein informativ</td></tr>
+          <tr><td>Abwählen löscht die Fehlermeldung</td><td>Wenn der Nutzer das Limit erreicht hatte und dann einen Platz abwählt, ist der Fehler nicht mehr relevant</td></tr>
+          <tr><td><code>Set</code> für <code>selectedIds</code></td><td>O(1) für add/delete/has — effizienter als ein Array; verhindert Duplikate ohne zusätzliche Logik</td></tr>
+        </tbody>
+      </table>
+
+      <div class="callout callout-green">
+        <div class="callout-title">Hinzugefügte Funktion — Auswahl bleibt nach Neuladen erhalten</div>
+        <div class="callout-text"><code>saveSelection()</code> serialisiert <code>selectedIds</code> nach jeder Interaktion in <code>localStorage</code>. <code>loadSelection()</code> läuft vor dem ersten Render und validiert jede gespeicherte ID — nur Plätze, die noch existieren und <code>available</code> sind, werden wiederhergestellt.</div>
+      </div>
+
+      <div class="callout callout-blue">
+        <div class="callout-title">Wichtige Entscheidung — Vollständiges Neu-Rendern bei jedem Klick</div>
+        <div class="callout-text">Bei 10 Stellplätzen sind die Performance-Kosten vernachlässigbar. Ein vollständiges Re-Render hält die Logik einfach: <code>selectedIds</code> ist die einzige Quelle der Wahrheit und das DOM spiegelt sie immer vollständig wider.</div>
+      </div>
+    </div>
+
+    <!-- Verbesserungen -->
+    <div class="doc-section">
+      <div class="section-label">Zukünftige Verbesserungen</div>
+      <h2 class="section-title">Was ich mit mehr Zeit verbessern würde</h2>
+      <div class="improve-grid">
+        <div class="improve-card">
+          <div class="improve-card-title"><div class="improve-card-num">01</div> Tabelle</div>
+          <ul>
+            <li>Tastatursortiertung (Enter / Leertaste) <span class="badge badge-high">Hoch</span></li>
+            <li><code>aria-sort</code> für Screenreader <span class="badge badge-high">Hoch</span></li>
+            <li><code>:focus-visible</code>-Ring auf Header <span class="badge badge-high">Hoch</span></li>
+            <li>Responsives horizontales Scrollen <span class="badge badge-med">Mittel</span></li>
+            <li>Mehrspalten-Sortierung via Shift+Klick <span class="badge badge-low">Niedrig</span></li>
+          </ul>
+        </div>
+        <div class="improve-card">
+          <div class="improve-card-title"><div class="improve-card-num">02</div> Board</div>
+          <ul>
+            <li>Touch Drag-Support (Pointer Events) <span class="badge badge-high">Hoch</span></li>
+            <li>Prioritäts-Farbbadges auf Tickets <span class="badge badge-high">Hoch</span></li>
+            <li>Tastatur-Kartenbewegung (Pfeiltasten) <span class="badge badge-med">Mittel</span></li>
+            <li>Leere-Spalte-Platzhaltertext <span class="badge badge-med">Mittel</span></li>
+            <li>Letzte Aktion rückgängig machen (Ctrl+Z) <span class="badge badge-low">Niedrig</span></li>
+          </ul>
+        </div>
+        <div class="improve-card">
+          <div class="improve-card-title"><div class="improve-card-num">03</div> Parkplatz-Karte</div>
+          <ul>
+            <li><code>:focus-visible</code>-Styles auf Stellplätzen <span class="badge badge-high">Hoch</span></li>
+            <li><code>aria-pressed</code> auf Stellplatz-Buttons <span class="badge badge-high">Hoch</span></li>
+            <li>"Auswahl zurücksetzen"-Button <span class="badge badge-med">Mittel</span></li>
+            <li>Hover-Tooltip: ID + Gebühr + Zone <span class="badge badge-med">Mittel</span></li>
+            <li>Zonen-/Reihenbeschriftungen im Raster <span class="badge badge-low">Niedrig</span></li>
+          </ul>
+        </div>
+        <div class="improve-card">
+          <div class="improve-card-title"><div class="improve-card-num">★</div> Alle Aufgaben</div>
+          <ul>
+            <li><code>aria-sort</code> auf Tabellen-Headern</li>
+            <li>ARIA-Rollen für Kanban-Spalten</li>
+            <li>Touch Drag-and-Drop Fallback</li>
+            <li><code>aria-pressed</code> auf Stellplatz-Buttons</li>
+            <li><code>prefers-reduced-motion</code> für Animationen</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- Abschluss -->
+    <div class="closing">
+      <div class="closing-icon">✦</div>
+      <div class="closing-body">
+        <h3>Allgemeiner Ansatz</h3>
+        <p>In keiner Aufgabe wurden externe Bibliotheken oder Build-Tools verwendet. Die gesamte Logik folgt einem einfachen Muster: Zustand aktualisieren → speichern → neu rendern → abgeleitete UI aktualisieren. Code-Kommentare erklären das <em>Warum</em> hinter den Entscheidungen, nicht nur was der Code macht. Dieselbe Priorität, die ich in einem echten Team setzen würde.</p>
+      </div>
+    </div>
+
+  </div>
+  </div><!-- /lang-block-de -->
+
+  <!-- ═══════════════════════════════════════════════════════
+       FOOTER
+  ═══════════════════════════════════════════════════════ -->
+  <footer class="doc-footer">
+    <span>Chirayu Subedi — April 2026</span>
+    <span>
+      <span class="lang-block-en">Plain HTML · CSS · JavaScript — No frameworks</span>
+      <span class="lang-block-de">Reines HTML · CSS · JavaScript — Keine Frameworks</span>
+    </span>
+    <span>chirayu.subedi.cs84@gmail.com</span>
+  </footer>
+
+  <!-- ═══════════════════════════════════════════════════════
+       SCRIPT
+  ═══════════════════════════════════════════════════════ -->
+  <script>
+    function setLang(lang) {
+      document.body.classList.remove('lang-en', 'lang-de');
+      document.body.classList.add('lang-' + lang);
+      document.querySelectorAll('.lang-btn').forEach(function(btn) {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+      document.documentElement.lang = lang;
+      try { localStorage.setItem('submission-lang', lang); } catch(e) {}
+    }
+
+    // Restore saved language preference on load
+    (function() {
+      try {
+        var saved = localStorage.getItem('submission-lang');
+        if (saved === 'de') setLang('de');
+      } catch(e) {}
+    })();
+  </script>
+</body>
+</html>
