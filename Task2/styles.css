@@ -8,10 +8,10 @@
 
 body {
   margin: 0;
-  padding: 24px;
-  font-family: Arial, sans-serif;
-  background: #f8fafc;
-  color: #111827;
+  padding: 32px 24px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: #f1f5f9;
+  color: #0f172a;
 }
 
 .wrap {
@@ -20,91 +20,151 @@ body {
 }
 
 h1 {
-  margin: 0 0 8px;
+  margin: 0 0 6px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0f172a;
 }
 
 .subtitle {
-  margin: 0 0 16px;
-  color: #4b5563;
+  margin: 0 0 24px;
+  font-size: 0.875rem;
+  color: #64748b;
 }
 
-/* Three equal-width columns with a minimum so they don't collapse on narrow viewports */
+/* Three equal-width columns */
 .board {
   display: grid;
-  grid-template-columns: repeat(3, minmax(220px, 1fr));
-  gap: 12px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  align-items: start;
 }
 
-/* Column card: white surface, rounded, border, fixed minimum height */
+/* Column card — same shadow/radius as Task 1 */
 .column {
-  border: 1px solid #d1d5db;
+  background: #fff;
   border-radius: 10px;
-  background: #ffffff;
-  min-height: 420px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 4px 14px rgba(0, 0, 0, 0.05);
   overflow: hidden;
 }
 
-/* Column header bar: slightly grey to separate it from the drop area */
+/* Column header — matches th styling from Task 1:
+   uppercase, tracked, muted colour, light background, strong bottom border */
 .column>header {
-  padding: 12px;
-  border-bottom: 1px solid #e5e7eb;
-  font-weight: 600;
-  background: #f9fafb;
+  padding: 11px 16px;
+  background: #f8fafc;
+  border-bottom: 2px solid #e2e8f0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
-/* Drop area: tall enough to always be a reachable drop target */
+.col-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+/* Ticket-count pill badge */
+.col-count {
+  background: #e2e8f0;
+  color: #475569;
+  font-size: 0.68rem;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 999px;
+}
+
+/* Drop area — tall enough to always be a reachable target */
 .dropzone {
   min-height: 360px;
-  padding: 10px;
+  padding: 12px;
 }
 
-/* Base ticket card */
+/* Ticket card */
 .ticket {
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  padding: 10px;
-  margin-bottom: 10px;
   background: #fff;
-  /* Grab cursor + smooth shadow/opacity transitions for drag feedback */
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 12px 14px;
+  margin-bottom: 8px;
   cursor: grab;
   transition: box-shadow 0.15s, opacity 0.15s;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
 }
 
-/* Lift effect on hover to reinforce that cards are draggable */
+.ticket:last-child {
+  margin-bottom: 0;
+}
+
+/* Lift on hover reinforces that the card is draggable */
 .ticket:hover {
-  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-color: #cbd5e1;
 }
 
-/* Fade the original card while it is being dragged so it reads as "in flight" */
+/* Fade the source card while it is in flight */
 .ticket.dragging {
   opacity: 0.35;
   cursor: grabbing;
 }
 
-/* Ticket ID: small muted label above the title */
+/* Ticket ID: small muted monospace label */
 .ticket strong {
-  font-size: 0.75rem;
-  color: #6b7280;
-  letter-spacing: 0.05em;
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #94a3b8;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 5px;
 }
 
-/* Title row */
+/* Ticket title */
 .ticket>div {
-  margin: 4px 0 6px;
+  font-size: 0.875rem;
   font-weight: 500;
+  color: #1e293b;
+  line-height: 1.45;
+  margin-bottom: 10px;
 }
 
-/* Priority label: de-emphasised, secondary information */
+/* Priority badge pill */
 .ticket small {
-  font-size: 0.75rem;
-  color: #9ca3af;
+  display: inline-block;
+  font-size: 0.68rem;
+  font-weight: 600;
+  padding: 2px 8px;
+  border-radius: 999px;
+  letter-spacing: 0.03em;
+  border: 1px solid;
 }
 
-/* Active drop target: dashed blue border + blue tint
-   makes the valid landing zone immediately obvious during drag */
+/* Priority colours driven by data-priority on the ticket element */
+.ticket[data-priority="high"] small {
+  background: #fef2f2;
+  color: #dc2626;
+  border-color: #fca5a5;
+}
+
+.ticket[data-priority="medium"] small {
+  background: #fffbeb;
+  color: #d97706;
+  border-color: #fcd34d;
+}
+
+.ticket[data-priority="low"] small {
+  background: #f1f5f9;
+  color: #64748b;
+  border-color: #cbd5e1;
+}
+
+/* Active drop target: dashed blue outline makes the landing zone obvious */
 .dropzone.drag-over {
   background: #eff6ff;
-  border: 2px dashed #3b82f6;
+  outline: 2px dashed #3b82f6;
+  outline-offset: -4px;
   border-radius: 8px;
 }

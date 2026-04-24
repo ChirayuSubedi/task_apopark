@@ -45,6 +45,7 @@ function render() {
     el.className = "ticket";
     el.draggable = true;
     el.dataset.ticketId = ticket.id;
+    el.dataset.priority = ticket.priority; // enables CSS priority badge colours
     el.innerHTML = `
       <strong>${ticket.id}</strong>
       <div>${ticket.title}</div>
