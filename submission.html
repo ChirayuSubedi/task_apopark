@@ -815,6 +815,10 @@
           <tr><td><code>user-select: none</code> on sortable headers</td><td>Repeated clicks for sorting would otherwise highlight the header text, which looks broken</td></tr>
           <tr><td>Hover state on sortable headers</td><td>Darker grey background signals the header is interactive before the cursor changes</td></tr>
           <tr><td><code>text-align: right</code> on fee column</td><td>Standard typographic convention for numeric and currency values</td></tr>
+          <tr><td>System font + <code>box-shadow</code> card</td><td>Replaced Arial with the system font stack; flat border replaced with a layered shadow — matches Tasks 2 and 3 so all three tasks share one visual language</td></tr>
+          <tr><td><code>overflow: hidden</code> on <code>.table-shell</code> + <code>text-overflow: ellipsis</code> on cells</td><td>Eliminates horizontal scroll entirely. Fixed-layout cells clip long text with an ellipsis instead of pushing the table wider than its container</td></tr>
+          <tr><td>Absolutely positioned <code>.sort-arrow</code> span</td><td>Arrow sits outside normal text flow (<code>position: absolute; right: 8px</code>) — column width can never change when the sort indicator appears or disappears</td></tr>
+          <tr><td><code>.is-sorted</code> class on the active header</td><td>Blue label colour + blue arrow on the sorted column; CSS handles the visual state entirely, JS only toggles the class</td></tr>
         </tbody>
       </table>
 
@@ -827,12 +831,19 @@
           <tr><td>Stable sort via index tiebreaker</td><td>Each row is tagged with its original array index. Equal values (e.g. same start date) preserve their original relative order</td></tr>
           <tr><td><code>localeCompare</code> for string sort</td><td>Handles German umlauts (ä, ö, ü) correctly — plain <code>&lt;</code> comparison would sort them incorrectly</td></tr>
           <tr><td><code>Date.getTime()</code> for date sort</td><td>Explicit and unambiguous — makes intent clearer than lexicographic string comparison</td></tr>
+          <tr><td><code>.sort-arrow</code> span injected per sortable header</td><td>Label text node stays constant; only the empty span fills with ▲ or ▼ on sort. Column width is therefore never affected by the indicator being present or absent</td></tr>
+          <tr><td><code>classList.toggle('is-sorted')</code> in <code>setHeaderIndicators()</code></td><td>Active column header receives a CSS class — blue accent applied entirely in CSS without inline styles or JS colour logic</td></tr>
         </tbody>
       </table>
 
       <div class="callout callout-blue">
         <div class="callout-title">Key Decision — Stable Sort</div>
         <div class="callout-text">JavaScript's native sort is stable in all modern browsers. To make stability <em>explicit and independent of engine guarantees</em>, each row is tagged with its original index before sorting and that index serves as a tiebreaker when the primary comparison returns zero.</div>
+      </div>
+
+      <div class="callout callout-green">
+        <div class="callout-title">Fix — Horizontal Scroll Triggered by Sort Arrow</div>
+        <div class="callout-text">Appending "▲" to the header <code>textContent</code> caused "Monthly Fee ▲" to exceed the fixed 10% column width with <code>white-space: nowrap</code>, triggering a horizontal scrollbar. Fixed by: (1) injecting the arrow into an absolutely-positioned <code>.sort-arrow</code> span so it is outside the text flow and adds zero width, and (2) changing <code>overflow: auto</code> to <code>overflow: hidden</code> on the container.</div>
       </div>
     </div>
 
@@ -855,6 +866,9 @@
           <tr><td><code>.ticket.dragging { opacity: 0.35 }</code></td><td>Source card fades while "in flight" — standard DnD convention showing where the card came from</td></tr>
           <tr><td>Ticket typography hierarchy</td><td>Small muted ID label above a bolder title — ID is metadata, title is primary content</td></tr>
           <tr><td><code>.dropzone.drag-over</code> dashed blue border</td><td>Dashed border is the universal drop-target indicator; removed only when <code>enterCount</code> reaches 0 — no flicker</td></tr>
+          <tr><td>Priority colour badges via <code>[data-priority]</code></td><td>High = red pill, Medium = amber pill, Low = grey pill — priority is scannable at a glance. Driven entirely by CSS attribute selectors; no colour logic in JS</td></tr>
+          <tr><td><code>.col-title</code> + <code>.col-count</code> pill in column header</td><td>Count displayed as a pill badge (parentheses removed). Requires two child <code>&lt;span&gt;</code> elements in the header HTML; allows independent styling of title and count</td></tr>
+          <tr><td>Unified design system across all three tasks</td><td>Same system font stack, card <code>box-shadow</code>, <code>border-radius: 10px</code>, and uppercase tracked header style — consistent visual language with Tasks 1 and 3</td></tr>
         </tbody>
       </table>
 
@@ -868,6 +882,7 @@
           <tr><td><code>dragend</code> always clears state</td><td>Fires even on Escape/cancelled drag — prevents stale ID affecting the next drag</td></tr>
           <tr><td><code>setupDropzones()</code> called once before <code>render()</code></td><td><code>render()</code> only rewrites dropzone children — listeners survive re-renders without needing to be re-attached</td></tr>
           <tr><td>Versioned <code>localStorage</code> key</td><td>Incrementing the version on schema change prevents stale data errors on load</td></tr>
+          <tr><td><code>el.dataset.priority = ticket.priority</code></td><td>Exposes priority to CSS as a <code>data-priority</code> attribute — the badge colour is fully CSS-driven; zero JS colour logic needed</td></tr>
         </tbody>
       </table>
 
@@ -902,6 +917,10 @@
           <tr><td><code>.spot.selected</code> blue tint</td><td>Blue is the standard "active/selected" colour; doesn't conflict with green/red status colours</td></tr>
           <tr><td>Different hover colours for available vs. selected</td><td>Deeper green signals "click to select"; deeper blue signals "click to deselect" — hover communicates the action before the click</td></tr>
           <tr><td><code>min-height: 20px</code> on <code>.error</code></td><td>Reserves vertical space so the layout does not jump when the error message appears or disappears</td></tr>
+          <tr><td><code>.card</code> wrapper on all map content</td><td>Single white card surface containing legend, summary, error, and map grid — matches the card-per-section pattern in Tasks 1 and 2; requires adding one <code>&lt;div class="card"&gt;</code> in the HTML</td></tr>
+          <tr><td>Spot tile typography coloured by state</td><td>Spot ID (<code>&lt;strong&gt;</code>) and fee (<code>&lt;div&gt;</code>) both change colour based on status — green/red/blue — making each tile read as a unified element rather than a box with text</td></tr>
+          <tr><td>Selection ring: <code>box-shadow: 0 0 0 2px rgba(59,130,246,0.2)</code></td><td>A soft 2px ring outside the border makes selection visually distinct without changing tile dimensions or disturbing the grid layout</td></tr>
+          <tr><td>Unified design system with Tasks 1 and 2</td><td>Same font stack, shadow card, border-radius, and page background — all three tasks share one consistent visual language</td></tr>
         </tbody>
       </table>
 
@@ -947,7 +966,7 @@
           <div class="improve-card-title"><div class="improve-card-num">02</div> Board</div>
           <ul>
             <li>Touch drag support (Pointer Events) <span class="badge badge-high">High</span></li>
-            <li>Priority colour badges on tickets <span class="badge badge-high">High</span></li>
+            <li>Priority colour badges on tickets <span class="badge" style="background:#dcfce7;color:#16a34a">Done ✓</span></li>
             <li>Keyboard card movement (arrow keys) <span class="badge badge-med">Med</span></li>
             <li>Empty column placeholder text <span class="badge badge-med">Med</span></li>
             <li>Undo last move (Ctrl+Z) <span class="badge badge-low">Low</span></li>
@@ -1025,6 +1044,10 @@
           <tr><td><code>user-select: none</code> auf sortierbare Header</td><td>Verhindert versehentliche Textmarkierung bei Mehrfachklicks zum Sortieren</td></tr>
           <tr><td>Hover-Zustand auf sortierbaren Headern</td><td>Dunklerer Grau-Hintergrund signalisiert Interaktivität, bevor der Cursor wechselt</td></tr>
           <tr><td><code>text-align: right</code> auf Gebührenspalte</td><td>Typografischer Standard für numerische Werte und Währungsangaben</td></tr>
+          <tr><td>System-Schrift + <code>box-shadow</code>-Karte</td><td>Arial durch den System-Font-Stack ersetzt; flacher Rahmen durch einen mehrstufigen Schatten ersetzt — entspricht Aufgaben 2 und 3, alle drei Aufgaben teilen eine visuelle Sprache</td></tr>
+          <tr><td><code>overflow: hidden</code> auf <code>.table-shell</code> + <code>text-overflow: ellipsis</code> auf Zellen</td><td>Beseitigt horizontales Scrollen vollständig. Zellen mit fester Breite kürzen langen Text mit Ellipsis, anstatt die Tabelle breiter zu schieben</td></tr>
+          <tr><td>Absolut positionierter <code>.sort-arrow</code>-Span</td><td>Pfeil liegt außerhalb des normalen Textflusses (<code>position: absolute; right: 8px</code>) — Spaltenbreite ändert sich nie, wenn der Sortierindikator erscheint oder verschwindet</td></tr>
+          <tr><td><code>.is-sorted</code>-Klasse auf dem aktiven Header</td><td>Blaue Beschriftungsfarbe + blauer Pfeil auf der sortierten Spalte; CSS übernimmt den visuellen Zustand, JS schaltet nur die Klasse</td></tr>
         </tbody>
       </table>
 
@@ -1037,12 +1060,19 @@
           <tr><td>Stabiles Sortieren via Index-Tiebreaker</td><td>Jede Zeile erhält ihren ursprünglichen Array-Index. Bei gleichen Werten (z.B. gleiches Startdatum) bleibt die ursprüngliche Reihenfolge erhalten</td></tr>
           <tr><td><code>localeCompare</code> für String-Sortierung</td><td>Behandelt deutsche Umlaute (ä, ö, ü) korrekt — ein einfacher <code>&lt;</code>-Vergleich würde sie falsch sortieren</td></tr>
           <tr><td><code>Date.getTime()</code> für Datumssortierung</td><td>Explizit und eindeutig — macht den Intent klarer als lexikografischer String-Vergleich</td></tr>
+          <tr><td><code>.sort-arrow</code>-Span in jeden sortierbaren Header eingefügt</td><td>Der Text-Knoten bleibt konstant; nur der leere Span wird beim Sortieren mit ▲ oder ▼ gefüllt. Spaltenbreite wird nie durch den Indikator beeinflusst</td></tr>
+          <tr><td><code>classList.toggle('is-sorted')</code> in <code>setHeaderIndicators()</code></td><td>Der aktive Spalten-Header erhält eine CSS-Klasse — Blauakzent wird vollständig in CSS angewandt, ohne Inline-Styles im JS</td></tr>
         </tbody>
       </table>
 
       <div class="callout callout-blue">
         <div class="callout-title">Wichtige Entscheidung — Stabiles Sortieren</div>
         <div class="callout-text">JavaScripts natives Sortierverfahren ist in allen modernen Browsern stabil. Um Stabilität <em>explizit und unabhängig von Engine-Garantien</em> zu gewährleisten, wird jede Zeile vor dem Sortieren mit ihrem ursprünglichen Index markiert. Dieser dient als Tiebreaker, wenn der primäre Vergleich null ergibt.</div>
+      </div>
+
+      <div class="callout callout-green">
+        <div class="callout-title">Behoben — Horizontales Scrollen durch Sortierungspfeil</div>
+        <div class="callout-text">Das Anhängen von "▲" an den Header-<code>textContent</code> ließ "Monthly Fee ▲" die feste 10%-Spaltenbreite bei <code>white-space: nowrap</code> überschreiten, was eine horizontale Scrollleiste auslöste. Behoben durch: (1) Einfügen des Pfeils in einen absolut positionierten <code>.sort-arrow</code>-Span (außerhalb des Textflusses, addiert keine Breite), und (2) Ändern von <code>overflow: auto</code> zu <code>overflow: hidden</code> am Container.</div>
       </div>
     </div>
 
@@ -1065,6 +1095,9 @@
           <tr><td><code>.ticket.dragging { opacity: 0.35 }</code></td><td>Quellkarte blendet sich ein während sie "in der Luft" ist — zeigt, woher die Karte kommt</td></tr>
           <tr><td>Typografie-Hierarchie der Tickets</td><td>Kleine, gedämpfte ID-Beschriftung über dem Titel — ID ist Metadaten, Titel ist Hauptinhalt</td></tr>
           <tr><td>Gestrichelter blauer Rahmen bei <code>.drag-over</code></td><td>Gestrichelter Rahmen = universelles Dropzonen-Signal; wird nur entfernt wenn <code>enterCount</code> 0 erreicht — kein Flackern</td></tr>
+          <tr><td>Prioritäts-Farbbadges via <code>[data-priority]</code></td><td>Hoch = rotes Pill, Mittel = gelbes Pill, Niedrig = graues Pill — Priorität ist auf einen Blick erkennbar. Vollständig über CSS-Attributselektoren gesteuert; keine Farblogik im JS</td></tr>
+          <tr><td><code>.col-title</code> + <code>.col-count</code>-Badge im Spalten-Header</td><td>Anzahl als Pill-Badge dargestellt (Klammern entfernt). Erfordert zwei Kind-<code>&lt;span&gt;</code>-Elemente im Header-HTML für unabhängiges Styling</td></tr>
+          <tr><td>Einheitliches Design-System für alle drei Aufgaben</td><td>Gleicher System-Font-Stack, Karten-<code>box-shadow</code>, <code>border-radius: 10px</code> und Uppercase-Header — konsistente visuelle Sprache mit Aufgaben 1 und 3</td></tr>
         </tbody>
       </table>
 
@@ -1078,6 +1111,7 @@
           <tr><td><code>dragend</code> löscht immer den Zustand</td><td>Feuert auch bei Escape/abgebrochenem Drag — verhindert veraltete ID beim nächsten Drag</td></tr>
           <tr><td><code>setupDropzones()</code> einmalig vor <code>render()</code></td><td><code>render()</code> überschreibt nur Dropzone-Kinder — Listener überleben Re-Renders ohne Neuregistrierung</td></tr>
           <tr><td>Versionierter <code>localStorage</code>-Key</td><td>Inkrementierung der Version bei Schema-Änderung verhindert Fehler durch veraltete gespeicherte Daten</td></tr>
+          <tr><td><code>el.dataset.priority = ticket.priority</code></td><td>Macht die Priorität als <code>data-priority</code>-Attribut für CSS verfügbar — Badge-Farbe vollständig CSS-gesteuert, keine JS-Farblogik nötig</td></tr>
         </tbody>
       </table>
 
@@ -1112,6 +1146,10 @@
           <tr><td><code>.spot.selected</code> blauer Farbton</td><td>Blau ist die Standardfarbe für "aktiv/ausgewählt"; kollidiert nicht mit grün/rot</td></tr>
           <tr><td>Unterschiedliche Hover-Farben für verfügbar/ausgewählt</td><td>Tieferes Grün signalisiert "klicken zum Auswählen"; tieferes Blau signalisiert "klicken zum Abwählen"</td></tr>
           <tr><td><code>min-height: 20px</code> auf <code>.error</code></td><td>Reserviert vertikalen Platz, damit das Layout nicht springt wenn die Fehlermeldung erscheint oder verschwindet</td></tr>
+          <tr><td><code>.card</code>-Wrapper für alle Karteninhalte</td><td>Einzelne weiße Karte für Legende, Zusammenfassung, Fehler und Raster — entspricht dem Karten-Muster in Aufgaben 1 und 2; erfordert ein <code>&lt;div class="card"&gt;</code> im HTML</td></tr>
+          <tr><td>Stellplatz-Typografie nach Status eingefärbt</td><td>Stellplatz-ID (<code>&lt;strong&gt;</code>) und Gebühr (<code>&lt;div&gt;</code>) wechseln die Farbe je nach Status (grün/rot/blau) — Kachel liest sich als einheitliches Element</td></tr>
+          <tr><td>Auswahlring: <code>box-shadow: 0 0 0 2px rgba(59,130,246,0.2)</code></td><td>2px-Ring außerhalb des Rahmens macht die Auswahl unverwechselbar, ohne Kachelabmessungen oder das Rasterlayout zu verändern</td></tr>
+          <tr><td>Einheitliches Design-System mit Aufgaben 1 und 2</td><td>Gleicher Font-Stack, Schattenrahmen, Randradius und Seitenhintergrund — alle drei Aufgaben teilen eine konsistente visuelle Sprache</td></tr>
         </tbody>
       </table>
 
@@ -1157,7 +1195,7 @@
           <div class="improve-card-title"><div class="improve-card-num">02</div> Board</div>
           <ul>
             <li>Touch Drag-Support (Pointer Events) <span class="badge badge-high">Hoch</span></li>
-            <li>Prioritäts-Farbbadges auf Tickets <span class="badge badge-high">Hoch</span></li>
+            <li>Prioritäts-Farbbadges auf Tickets <span class="badge" style="background:#dcfce7;color:#16a34a">Erledigt ✓</span></li>
             <li>Tastatur-Kartenbewegung (Pfeiltasten) <span class="badge badge-med">Mittel</span></li>
             <li>Leere-Spalte-Platzhaltertext <span class="badge badge-med">Mittel</span></li>
             <li>Letzte Aktion rückgängig machen (Ctrl+Z) <span class="badge badge-low">Niedrig</span></li>
