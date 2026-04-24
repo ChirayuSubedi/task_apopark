@@ -11,7 +11,7 @@
 }
 
 * {
-  box-sizing: border-box;
+  box-sizing: content-box;
 }
 
 body {
@@ -37,6 +37,7 @@ h1 {
   color: #4b5563;
 }
 
+/* Card container: white background + border + rounded corners + scroll safety */
 .table-shell {
   background: white;
   border: 1px solid #d1d5db;
@@ -44,6 +45,7 @@ h1 {
   overflow: auto;
 }
 
+/* table-layout: fixed allows nth-child widths to be respected */
 .employee-table {
   width: 100%;
   border-collapse: collapse;
@@ -58,13 +60,64 @@ h1 {
   white-space: nowrap;
 }
 
+/* Distinct header: slightly grey background + bold text */
 .employee-table th {
   background: #f3f4f6;
   font-weight: 600;
 }
 
-/* TODO: set required widths:
-   Name 28%, Department 22%, Role 28%, Start Date 12%, Monthly Fee 10%
-*/
+/* Required column widths as specified in task */
+.employee-table th:nth-child(1),
+.employee-table td:nth-child(1) {
+  width: 28%;
+  /* Name */
+}
 
-/* TODO: improve sortable header states and active sort indicator visibility */
+.employee-table th:nth-child(2),
+.employee-table td:nth-child(2) {
+  width: 22%;
+  /* Department */
+}
+
+.employee-table th:nth-child(3),
+.employee-table td:nth-child(3) {
+  width: 28%;
+  /* Role */
+}
+
+.employee-table th:nth-child(4),
+.employee-table td:nth-child(4) {
+  width: 12%;
+  /* Start Date */
+}
+
+.employee-table th:nth-child(5),
+.employee-table td:nth-child(5) {
+  width: 10%;
+  /* Monthly Fee */
+}
+
+/* Zebra striping: alternating row color for easier row tracking */
+.employee-table tbody tr:nth-child(even) {
+  background: #f9fafb;
+}
+
+/* Row hover: blue tint highlights current row without being distracting */
+.employee-table tbody tr:hover {
+  background: #eff6ff;
+}
+
+/* Prevent text selection on repeated clicks when sorting */
+.employee-table th[data-sortable="true"] {
+  user-select: none;
+}
+
+/* Visual feedback that the header is clickable */
+.employee-table th[data-sortable="true"]:hover {
+  background: #e5e7eb;
+}
+
+/* Right-align the fee column — standard for numeric/currency values */
+.employee-table td:last-child {
+  text-align: right;
+}
