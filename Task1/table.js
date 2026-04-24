@@ -42,17 +42,16 @@ function compareValues(a, b, type) {
   return String(a).localeCompare(String(b));
 }
 
-// Updates ▲/▼ indicators: only the active column gets an arrow, others are reset
+// Updates ▲/▼ indicators and the is-sorted class.
+// Only the .sort-arrow span's content changes — label text never changes,
+// so column width stays stable and no horizontal scroll can appear.
 function setHeaderIndicators() {
   headers.forEach((th) => {
-    const baseLabel = th.textContent.replace(" ▲", "").replace(" ▼", "");
-    const key = th.dataset.key;
-
-    if (key === state.activeKey) {
-      th.textContent = `${baseLabel} ${state.direction === "asc" ? "▲" : "▼"}`;
-    } else {
-      th.textContent = baseLabel;
-    }
+    const arrow = th.querySelector(".sort-arrow");
+    if (!arrow) return;
+    const isActive = th.dataset.key === state.activeKey;
+    arrow.textContent = isActive ? (state.direction === "asc" ? "▲" : "▼") : "";
+    th.classList.toggle("is-sorted", isActive);
   });
 }
 
@@ -80,13 +79,16 @@ function sortBy(key, type) {
   render(indexed.map((x) => x.row));
 }
 
-// Wire up click handlers only on columns that have data-sortable="true"
-// (Role column intentionally has no data-sortable attribute)
+// Wire up click handlers and inject the .sort-arrow span into each sortable header.
+// The span is empty by default; setHeaderIndicators() fills it on sort.
+// Keeping the label in its own text node means its width is never affected by the arrow.
 headers.forEach((th) => {
   const isSortable = th.dataset.sortable === "true";
   if (!isSortable) return;
 
-  th.style.cursor = "pointer";
+  const label = th.textContent.trim();
+  th.innerHTML = `${label}<span class="sort-arrow"></span>`;
+
   th.addEventListener("click", () => {
     sortBy(th.dataset.key, th.dataset.type);
   });

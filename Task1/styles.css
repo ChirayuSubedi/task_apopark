@@ -11,113 +11,172 @@
 }
 
 * {
-  box-sizing: content-box;
+  box-sizing: border-box;
 }
 
 body {
   margin: 0;
-  padding: 24px;
-  font-family: Arial, sans-serif;
-  background: #f6f7fb;
-  color: #1f2937;
+  padding: 32px 24px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif;
+  background: #f1f5f9;
+  color: #0f172a;
 }
 
 .wrap {
-  max-width: 980px;
+  max-width: 960px;
   margin: 0 auto;
 }
 
 h1 {
-  margin: 0 0 8px;
-  font-size: 1.4rem;
+  margin: 0 0 6px;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #0f172a;
 }
 
 .subtitle {
-  margin: 0 0 16px;
-  color: #4b5563;
+  margin: 0 0 20px;
+  font-size: 0.875rem;
+  color: #64748b;
 }
 
-/* Card container: white background + border + rounded corners + scroll safety */
+/* Card container — overflow: hidden + fixed-layout table means
+   the table always fits exactly; no scrollbar can appear */
 .table-shell {
-  background: white;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  overflow: auto;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 4px 14px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
 }
 
-/* table-layout: fixed allows nth-child widths to be respected */
+/* table-layout: fixed lets nth-child percentage widths be enforced */
 .employee-table {
   width: 100%;
   border-collapse: collapse;
   table-layout: fixed;
 }
 
-.employee-table th,
-.employee-table td {
-  padding: 10px 12px;
-  border-bottom: 1px solid #e5e7eb;
-  text-align: left;
-  white-space: nowrap;
-}
-
-/* Distinct header: slightly grey background + bold text */
-.employee-table th {
-  background: #f3f4f6;
-  font-weight: 600;
-}
-
 /* Required column widths as specified in task */
 .employee-table th:nth-child(1),
 .employee-table td:nth-child(1) {
   width: 28%;
-  /* Name */
 }
+
+/* Name */
 
 .employee-table th:nth-child(2),
 .employee-table td:nth-child(2) {
   width: 22%;
-  /* Department */
 }
+
+/* Department */
 
 .employee-table th:nth-child(3),
 .employee-table td:nth-child(3) {
   width: 28%;
-  /* Role */
 }
+
+/* Role */
 
 .employee-table th:nth-child(4),
 .employee-table td:nth-child(4) {
   width: 12%;
-  /* Start Date */
 }
+
+/* Start Date */
 
 .employee-table th:nth-child(5),
 .employee-table td:nth-child(5) {
   width: 10%;
-  /* Monthly Fee */
+}
+
+/* Monthly Fee */
+
+/* Header row — separated from data by a stronger bottom border */
+.employee-table thead tr {
+  border-bottom: 2px solid #e2e8f0;
+}
+
+.employee-table th {
+  padding: 11px 16px;
+  text-align: left;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #64748b;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  background: #f8fafc;
+  /* nowrap + hidden + ellipsis: text clips inside its fixed column,
+     never pushing the table wider than its container */
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.employee-table td {
+  padding: 12px 16px;
+  font-size: 0.9rem;
+  color: #334155;
+  border-bottom: 1px solid #f1f5f9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* No divider line under the very last row */
+.employee-table tbody tr:last-child td {
+  border-bottom: none;
 }
 
 /* Zebra striping: alternating row color for easier row tracking */
-.employee-table tbody tr:nth-child(even) {
-  background: #f9fafb;
+.employee-table tbody tr:nth-child(even) td {
+  background: #f8fafc;
 }
 
-/* Row hover: blue tint highlights current row without being distracting */
-.employee-table tbody tr:hover {
+/* Row hover: blue tint highlights current row */
+.employee-table tbody tr:hover td {
   background: #eff6ff;
 }
 
-/* Prevent text selection on repeated clicks when sorting */
+/* Sortable headers: position relative lets the arrow span sit inside the cell */
 .employee-table th[data-sortable="true"] {
   user-select: none;
+  /* prevent text selection on repeated clicks */
+  position: relative;
+  padding-right: 26px;
+  /* reserve space so the arrow never overlaps label text */
+  cursor: pointer;
 }
 
-/* Visual feedback that the header is clickable */
 .employee-table th[data-sortable="true"]:hover {
-  background: #e5e7eb;
+  background: #f1f5f9;
+  color: #475569;
 }
 
-/* Right-align the fee column — standard for numeric/currency values */
+/* Active column header gets a darker label to signal the current sort */
+.employee-table th.is-sorted {
+  color: #1e40af;
+}
+
+/* Arrow is absolutely positioned — completely outside text flow.
+   This is the key fix: the column width is never affected by the arrow. */
+.sort-arrow {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.6rem;
+  color: #cbd5e1;
+  pointer-events: none;
+}
+
+/* Active sort arrow gets the accent colour */
+.is-sorted .sort-arrow {
+  color: #3b82f6;
+}
+
+/* Right-align numeric/currency column — standard typographic convention */
+.employee-table th:last-child,
 .employee-table td:last-child {
   text-align: right;
 }
