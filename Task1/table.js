@@ -27,7 +27,7 @@ function render(data) {
         <td>${item.department}</td>
         <td>${item.role}</td>
         <td>${item.startDate}</td>
-        <td>${item.monthlyFee}</td>
+        <td>${item.monthlyFee} €</td>
       </tr>
     `
     )
