@@ -2,7 +2,7 @@
 
 **Applicant:** Chirayu Subedi  
 **Date:** April 2026  
-**Repository:** [github.com/chirayu-subedi/tasks](https://github.com/chirayu-subedi/tasks)
+**Repository:** [github.com/ChirayuSubedi/task_apopark.git](https://github.com/ChirayuSubedi/task_apopark.git)
 
 ---
 
