@@ -1,0 +1,66 @@
+/* Task:
+   Improve board layout and drag/drop visual feedback.
+*/
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 24px;
+  font-family: Arial, sans-serif;
+  background: #f8fafc;
+  color: #111827;
+}
+
+.wrap {
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+h1 {
+  margin: 0 0 8px;
+}
+
+.subtitle {
+  margin: 0 0 16px;
+  color: #4b5563;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.column {
+  border: 1px solid #d1d5db;
+  border-radius: 10px;
+  background: #ffffff;
+  min-height: 420px;
+  overflow: hidden;
+}
+
+.column > header {
+  padding: 12px;
+  border-bottom: 1px solid #e5e7eb;
+  font-weight: 600;
+  background: #f9fafb;
+}
+
+.dropzone {
+  min-height: 360px;
+  padding: 10px;
+}
+
+.ticket {
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 10px;
+  margin-bottom: 10px;
+  background: #fff;
+}
+
+/* TODO: improve ticket/card style and add stronger interaction states */
+/* TODO: add visible dropzone highlight while drag is over it */

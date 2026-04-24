@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Task 2 - Ticket Board</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="wrap">
+      <h1>Support Ticket Board</h1>
+      <p class="subtitle">Style this board and implement drag-and-drop movement.</p>
+
+      <section class="board" id="board">
+        <article class="column" data-status="todo">
+          <header>To Do (<span id="count-todo">0</span>)</header>
+          <div class="dropzone" id="col-todo"></div>
+        </article>
+        <article class="column" data-status="inprogress">
+          <header>In Progress (<span id="count-inprogress">0</span>)</header>
+          <div class="dropzone" id="col-inprogress"></div>
+        </article>
+        <article class="column" data-status="done">
+          <header>Done (<span id="count-done">0</span>)</header>
+          <div class="dropzone" id="col-done"></div>
+        </article>
+      </section>
+    </main>
+
+    <script src="./board.js"></script>
+  </body>
+</html>

@@ -1,0 +1,65 @@
+/* Task:
+   Improve visual design of the parking lot selector.
+*/
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 24px;
+  font-family: Arial, sans-serif;
+  background: #f8fafc;
+  color: #0f172a;
+}
+
+.wrap {
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+h1 {
+  margin: 0 0 12px;
+}
+
+.legend {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.chip {
+  border: 1px solid #d1d5db;
+  border-radius: 999px;
+  padding: 4px 10px;
+  font-size: 12px;
+}
+
+.summary {
+  margin-bottom: 8px;
+  color: #334155;
+}
+
+.error {
+  margin: 0 0 12px;
+  min-height: 20px;
+  color: #dc2626;
+}
+
+.map-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(90px, 1fr));
+  gap: 10px;
+}
+
+.spot {
+  border: 1px solid #cbd5e1;
+  border-radius: 8px;
+  padding: 12px;
+  text-align: center;
+  background: #fff;
+}
+
+/* TODO: improve states for .available, .occupied, .selected */
+/* TODO: add hover styles for selectable spots */

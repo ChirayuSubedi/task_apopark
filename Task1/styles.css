@@ -1,0 +1,70 @@
+/* Task:
+   Improve the table styling.
+   - Create a clean card-like layout
+   - Improve table readability
+   - Set required column widths
+   - Add hover + zebra striping
+*/
+
+:root {
+  color-scheme: light;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 24px;
+  font-family: Arial, sans-serif;
+  background: #f6f7fb;
+  color: #1f2937;
+}
+
+.wrap {
+  max-width: 980px;
+  margin: 0 auto;
+}
+
+h1 {
+  margin: 0 0 8px;
+  font-size: 1.4rem;
+}
+
+.subtitle {
+  margin: 0 0 16px;
+  color: #4b5563;
+}
+
+.table-shell {
+  background: white;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  overflow: auto;
+}
+
+.employee-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+.employee-table th,
+.employee-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid #e5e7eb;
+  text-align: left;
+  white-space: nowrap;
+}
+
+.employee-table th {
+  background: #f3f4f6;
+  font-weight: 600;
+}
+
+/* TODO: set required widths:
+   Name 28%, Department 22%, Role 28%, Start Date 12%, Monthly Fee 10%
+*/
+
+/* TODO: improve sortable header states and active sort indicator visibility */
