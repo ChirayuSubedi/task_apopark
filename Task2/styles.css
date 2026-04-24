@@ -28,12 +28,14 @@ h1 {
   color: #4b5563;
 }
 
+/* Three equal-width columns with a minimum so they don't collapse on narrow viewports */
 .board {
   display: grid;
   grid-template-columns: repeat(3, minmax(220px, 1fr));
   gap: 12px;
 }
 
+/* Column card: white surface, rounded, border, fixed minimum height */
 .column {
   border: 1px solid #d1d5db;
   border-radius: 10px;
@@ -42,25 +44,67 @@ h1 {
   overflow: hidden;
 }
 
-.column > header {
+/* Column header bar: slightly grey to separate it from the drop area */
+.column>header {
   padding: 12px;
   border-bottom: 1px solid #e5e7eb;
   font-weight: 600;
   background: #f9fafb;
 }
 
+/* Drop area: tall enough to always be a reachable drop target */
 .dropzone {
   min-height: 360px;
   padding: 10px;
 }
 
+/* Base ticket card */
 .ticket {
   border: 1px solid #d1d5db;
   border-radius: 8px;
   padding: 10px;
   margin-bottom: 10px;
   background: #fff;
+  /* Grab cursor + smooth shadow/opacity transitions for drag feedback */
+  cursor: grab;
+  transition: box-shadow 0.15s, opacity 0.15s;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
-/* TODO: improve ticket/card style and add stronger interaction states */
-/* TODO: add visible dropzone highlight while drag is over it */
+/* Lift effect on hover to reinforce that cards are draggable */
+.ticket:hover {
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
+}
+
+/* Fade the original card while it is being dragged so it reads as "in flight" */
+.ticket.dragging {
+  opacity: 0.35;
+  cursor: grabbing;
+}
+
+/* Ticket ID: small muted label above the title */
+.ticket strong {
+  font-size: 0.75rem;
+  color: #6b7280;
+  letter-spacing: 0.05em;
+}
+
+/* Title row */
+.ticket>div {
+  margin: 4px 0 6px;
+  font-weight: 500;
+}
+
+/* Priority label: de-emphasised, secondary information */
+.ticket small {
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+/* Active drop target: dashed blue border + blue tint
+   makes the valid landing zone immediately obvious during drag */
+.dropzone.drag-over {
+  background: #eff6ff;
+  border: 2px dashed #3b82f6;
+  border-radius: 8px;
+}
